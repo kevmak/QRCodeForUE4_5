@@ -52,14 +52,22 @@ public class QRCode : ModuleRules
 
         
 
+#if UE_5_0_OR_LATER
+        if (Target.Platform == UnrealTargetPlatform.Win64)
+#else
         if (Target.Platform == UnrealTargetPlatform.Win32 || Target.Platform == UnrealTargetPlatform.Win64)
+#endif
         {
             
             QRCodeLibPath = Path.Combine(QRCodeThirdPartyDir, "lib");
             QRCodeInlucdePath = Path.Combine(QRCodeThirdPartyDir, "include");
             // PublicLibraryPaths.Add(QRCodeLibPath);
             //  System.Console.WriteLine("QRCodeLibPath:" + QRCodeLibPath);
+#if UE_5_0_OR_LATER
+            string OSVersion = "x64";
+#else
             string OSVersion = (Target.Platform == UnrealTargetPlatform.Win32) ? "x86" : "x64";
+#endif
             PublicIncludePaths.Add(Path.Combine(QRCodeInlucdePath));
             PublicAdditionalLibraries.Add(Path.Combine(QRCodeLibPath, OSVersion, "qrencode.lib"));
         }
